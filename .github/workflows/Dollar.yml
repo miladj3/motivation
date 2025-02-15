@@ -1,0 +1,38 @@
+name: Send Motivation Dollar Message
+
+on:
+  schedule:
+    - cron: '0 10 * * *' # Runs every day at 10 AM
+  push:
+    branches:
+      - main
+
+jobs:
+  fetch_and_send:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get JSON Data from Bonbast
+        id: fetch_data
+        run: |
+          response=$(curl -s 'https://bonbast.info/?ajax=1')
+          echo "response=\$response" >> $GITHUB_ENV
+
+      - name: Extract Dollar Price
+        id: extract_price
+        run: |
+          price1=$(echo '${{ env.response }}' | jq -r '.[] | select(.title=="Dollar") | .price1')
+          echo "price1=\$price1" >> $GITHUB_ENV
+
+      - name: Calculate Division
+        id: calculate
+        run: |
+          secret_number=${{ secrets.NUMBER }}
+          result=$(awk "BEGIN {print \$secret_number / ${{ env.price1 }}}")
+          echo "result=\$result" >> $GITHUB_ENV
+
+      - name: Send Message to Telegram
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+          -d text="Result: ${{ env.result }} - ${{ secrets.MESSAGE }}"
