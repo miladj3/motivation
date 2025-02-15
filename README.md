@@ -15,6 +15,8 @@ This guide will walk you through the steps required to set up a Telegram bot, ob
 
 6. **Save the token** securely, as you will need it for the GitHub Action.
 
+7. **Start your bot** by clicking on the username provided in the BotFather's message. This will open a chat with your newly created bot.
+
 ## 2. How to Get User ID (Chat ID) Using @userinfobot
 
 1. **Open Telegram** and search for the **@userinfobot**.
@@ -30,8 +32,7 @@ This guide will walk you through the steps required to set up a Telegram bot, ob
 
 ### Fork the Repository
 
-1. Go to the GitHub repository containing the `Dollar.yml` file.
-2. Click the **Fork** button in the top-right corner to create a copy of the repository in your GitHub account.
+1. Click the **Fork** button in the top-right corner to create a copy of the repository in your GitHub account.
 
 ### Create Secrets in GitHub
 
