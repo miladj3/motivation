@@ -41,7 +41,7 @@ jobs:
             exit 1
           fi
           
-          result=$(awk "BEGIN {print $secret_number / $price1}")
+          result=$(awk "BEGIN {print int(($secret_number / $price1) + 0.5)}")
           echo "Calculated result: $result"
           echo "result=$result" >> $GITHUB_ENV
 
@@ -49,4 +49,4 @@ jobs:
         run: |
           curl -s -o /dev/null -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
           -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-          -d text="Result: ${{ env.result }} - ${{ secrets.MESSAGE }}"
+          -d text="Result: ${{ env.result }} ${{ secrets.MESSAGE }}"
