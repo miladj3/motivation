@@ -32,10 +32,11 @@ jobs:
         run: |
           secret_number=${{ secrets.NUMBER }}
           result=$(awk "BEGIN {print \$secret_number / ${{ env.price1 }}}")
+          echo "Calculated result: $result"
           echo "result=$result" >> $GITHUB_ENV
 
       - name: Send Message to Telegram
         run: |
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          curl -s -o /dev/null -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
           -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
           -d text="Result: ${{ env.result }} - ${{ secrets.MESSAGE }}"
