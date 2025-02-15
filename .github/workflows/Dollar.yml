@@ -16,21 +16,23 @@ jobs:
         id: fetch_data
         run: |
           response=$(curl -s 'https://bonbast.info/?ajax=1')
-          echo "JSON Response: \$response"
-          echo "response=\$response" >> $GITHUB_ENV
+          echo "JSON Response: $response"
+          echo "$response" > response.json
+          echo "response=$(cat response.json)" >> $GITHUB_ENV
 
       - name: Extract Dollar Price
         id: extract_price
         run: |
-          price1=$(echo '${{ env.response }}' | jq -r '.[] | select(.title=="Dollar") | .price1')
-          echo "price1=\$price1" >> $GITHUB_ENV
+          price1=$(cat response.json | jq -r '.[] | select(.title=="Dollar") | .price1')
+          echo "Extracted price1: $price1"
+          echo "price1=$price1" >> $GITHUB_ENV
 
       - name: Calculate Division
         id: calculate
         run: |
           secret_number=${{ secrets.NUMBER }}
           result=$(awk "BEGIN {print \$secret_number / ${{ env.price1 }}}")
-          echo "result=\$result" >> $GITHUB_ENV
+          echo "result=$result" >> $GITHUB_ENV
 
       - name: Send Message to Telegram
         run: |
