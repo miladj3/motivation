@@ -15,35 +15,16 @@ This guide will walk you through the steps required to set up a Telegram bot, ob
 
 6. **Save the token** securely, as you will need it for the GitHub Action.
 
-## 2. How to Start the Bot and Get Chat ID
+## 2. How to Get User ID (Chat ID) Using @userinfobot
 
-1. **Search for your bot** in Telegram using the username you created (e.g., `DollarRateBot_bot`).
-2. Start a chat with your bot by clicking on the **Start** button.
-3. To get the **Chat ID**, you can use the following method:
-   - Send a message to your bot (e.g., "Hello").
-   - Use the following URL in your browser to get the chat ID:
+1. **Open Telegram** and search for the **@userinfobot**.
+2. Start a chat with the bot by clicking on the **Start** button.
+3. The bot will automatically reply with your **User ID**.
+   - Example response:
      ```
-     https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
+     👤 Your ID: 123456789
      ```
-     Replace `<YOUR_BOT_TOKEN>` with the token you received from BotFather.
-   - Look for the `chat` object in the JSON response. The `id` field is your **Chat ID**.
-     Example:
-     ```json
-     {
-       "update_id": 123456789,
-       "message": {
-         "chat": {
-           "id": 987654321,
-           "first_name": "John",
-           "type": "private"
-         },
-         "text": "Hello"
-       }
-     }
-     ```
-   - In this example, the **Chat ID** is `987654321`.
-
-4. **Save the Chat ID** securely, as you will need it for the GitHub Action.
+4. **Save the User ID** securely, as this number is equivalent to your **Chat ID** and will be used in the GitHub Action.
 
 ## 3. How to Fork and Create 4 Action Secrets in GitHub Action
 
@@ -60,7 +41,7 @@ This guide will walk you through the steps required to set up a Telegram bot, ob
 4. Click on the **New repository secret** button to create the following secrets:
 
    - **TELEGRAM_BOT_TOKEN**: The token you received from BotFather.
-   - **TELEGRAM_CHAT_ID**: The Chat ID you obtained from the `getUpdates` API call.
+   - **TELEGRAM_CHAT_ID**: The User ID you obtained from @userinfobot.
    - **NUMBER**: A secret number that will be used in the calculation (e.g., `1000000`).
    - **MESSAGE**: A custom message that will be sent along with the result (e.g., "Dollars").
 
