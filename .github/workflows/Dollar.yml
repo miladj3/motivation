@@ -1,8 +1,8 @@
-name: Send Motivation Dollar Message
+name: Fetch Dollar Rate and Send to Telegram
 
 on:
   schedule:
-    - cron: '0 12 * * *' # Runs every day at 10 AM
+    - cron: '30 6 * * *' # Runs every day at 10 AM Iran Time (UTC+3:30)
   push:
     branches:
       - main
@@ -16,6 +16,7 @@ jobs:
         id: fetch_data
         run: |
           response=$(curl -s 'https://bonbast.info/?ajax=1')
+          echo "JSON Response: \$response"
           echo "response=\$response" >> $GITHUB_ENV
 
       - name: Extract Dollar Price
