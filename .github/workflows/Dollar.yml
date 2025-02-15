@@ -31,7 +31,17 @@ jobs:
         id: calculate
         run: |
           secret_number=${{ secrets.NUMBER }}
-          result=$(awk "BEGIN {print \$secret_number / ${{ env.price1 }}}")
+          price1=${{ env.price1 }}
+          echo "Secret Number: $secret_number"
+          echo "Dollar Price: $price1"
+          
+          # Ensure price1 is a valid number
+          if [[ -z "$price1" || "$price1" == "null" || "$price1" == "0" ]]; then
+            echo "Error: Invalid price1 value"
+            exit 1
+          fi
+          
+          result=$(awk "BEGIN {print $secret_number / $price1}")
           echo "Calculated result: $result"
           echo "result=$result" >> $GITHUB_ENV
 
