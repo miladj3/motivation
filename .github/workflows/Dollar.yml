@@ -23,7 +23,7 @@ jobs:
       - name: Extract Dollar Price
         id: extract_price
         run: |
-          price1=$(cat response.json | jq -r '.[] | select(.title=="Dollar") | .price1')
+          price1=$(cat response.json | jq -r '.[] | select(.title=="Dollar") | .price1' | tr -d ',')
           echo "Extracted price1: $price1"
           echo "price1=$price1" >> $GITHUB_ENV
 
