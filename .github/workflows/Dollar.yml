@@ -16,6 +16,7 @@ jobs:
         id: fetch_data
         run: |
           response=$(curl -s 'https://bonbast.info/?ajax=1')
+          echo "SENDING....."
           echo "JSON Response: $response"
           echo "$response" > response.json
           echo "response=$(cat response.json)" >> $GITHUB_ENV
