@@ -15,7 +15,10 @@ jobs:
       - name: Get JSON Data from Bonbast
         id: fetch_data
         run: |
-          response=$(curl -s 'https://bonbast.info/?ajax=1')
+          response=$(curl --location 'https://admin.alanchand.com/api/home' 
+          --header 'accept: application/json, text/plain, */*' 
+          --header 'Content-Type: application/json' 
+          --data '{ lang: 'fa' }')
           echo "SENDING....."
           echo "JSON Response: $response"
           echo "$response" > response.json
